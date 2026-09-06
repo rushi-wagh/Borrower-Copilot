@@ -38,10 +38,13 @@ const ICON_MAP = {
   collateralValue: Building2,
   lenderOffer: FileCheck,
   offeredRate: DollarSign,
+  processingFee: DollarSign,
 };
 
 export default function AssessmentPanel({ borrower, updateBorrower, assessment }) {
   const [editingQuestionId, setEditingQuestionId] = useState(null);
+  const [draftQuestionId, setDraftQuestionId] = useState(null);
+  const [draftValue, setDraftValue] = useState("");
 
   // Evaluate the next decision-critical adaptive question based on current borrower state.
   // assessment is passed so the FOIR check uses (existingEmi + safeEmi) / income per Rule 4.
@@ -50,7 +53,11 @@ export default function AssessmentPanel({ borrower, updateBorrower, assessment }
   const isComplete = activeQuestionId === null;
 
   const question = activeQuestionId ? QUESTION_DEFINITIONS[activeQuestionId] : null;
-  const currentValue = activeQuestionId ? borrower[activeQuestionId] : "";
+  const currentValue = activeQuestionId
+    ? draftQuestionId === activeQuestionId
+      ? draftValue
+      : borrower[activeQuestionId]
+    : "";
 
   const isCurrentValid = () => {
     if (!question) return false;
@@ -68,13 +75,20 @@ export default function AssessmentPanel({ borrower, updateBorrower, assessment }
   };
 
   const handleContinue = () => {
+    if (activeQuestionId) {
+      updateBorrower(activeQuestionId, currentValue);
+    }
     if (editingQuestionId) {
       setEditingQuestionId(null);
     }
+    setDraftQuestionId(null);
+    setDraftValue("");
   };
 
   const jumpToQuestion = (qId) => {
     setEditingQuestionId(qId);
+    setDraftQuestionId(qId);
+    setDraftValue(borrower[qId] ?? "");
   };
 
   if (isComplete) {
@@ -129,7 +143,10 @@ export default function AssessmentPanel({ borrower, updateBorrower, assessment }
           value={currentValue}
           placeholder={question.placeholder}
           suffix={question.suffix}
-          onChange={(val) => updateBorrower(activeQuestionId, val)}
+          onChange={(val) => {
+            setDraftQuestionId(activeQuestionId);
+            setDraftValue(val);
+          }}
         />
       )}
 
@@ -137,7 +154,10 @@ export default function AssessmentPanel({ borrower, updateBorrower, assessment }
         <ChoiceGrid
           options={question.options}
           value={currentValue}
-          onChange={(val) => updateBorrower(activeQuestionId, val)}
+          onChange={(val) => {
+            setDraftQuestionId(activeQuestionId);
+            setDraftValue(val);
+          }}
         />
       )}
 
@@ -145,7 +165,10 @@ export default function AssessmentPanel({ borrower, updateBorrower, assessment }
         <TextInput
           value={currentValue}
           placeholder={question.placeholder}
-          onChange={(val) => updateBorrower(activeQuestionId, val)}
+          onChange={(val) => {
+            setDraftQuestionId(activeQuestionId);
+            setDraftValue(val);
+          }}
         />
       )}
 
@@ -208,7 +231,7 @@ function Panel({
   const answeredIds = getAnsweredQuestionIds();
 
   return (
-    <div className="assessment-panel">
+    <div id="assessment" className="assessment-panel">
       <div className="panel-header">
         <div>
           <span className="eyebrow">{eyebrow}</span>

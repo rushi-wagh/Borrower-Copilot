@@ -1,10 +1,8 @@
 import {
   BarChart3,
-  BookOpen,
   FileText,
   LayoutDashboard,
   Settings,
-  ShieldCheck,
 } from "lucide-react";
 
 const navigation = [
@@ -19,11 +17,8 @@ const navigation = [
   },
   {
     icon: FileText,
-    label: "My Negotiation Card",
-  },
-  {
-    icon: BookOpen,
-    label: "Borrowing Guide",
+    label: "Negotiation Card",
+    href: "#negotiation-card",
   },
 ];
 
@@ -57,34 +52,26 @@ export default function Sidebar() {
           const Icon = item.icon;
 
           return (
-            <button
+            <a
               key={item.label}
+              href={item.href || `#${item.label.toLowerCase()}`}
               className={`nav-item ${
                 item.active ? "active" : ""
               }`}
             >
               <Icon size={19} />
               <span>{item.label}</span>
-            </button>
+            </a>
           );
         })}
       </nav>
 
       <div className="sidebar-bottom">
-        <div className="privacy-card">
-          <ShieldCheck size={18} />
-
-          <div>
-            <strong>
-              Your information stays private
-            </strong>
-
-            <span>
-              This assessment uses only what you choose
-              to share.
-            </span>
-          </div>
-        </div>
+        <a className="negotiation-nav-card" href="#negotiation-card">
+          <span className="summary-label">Negotiation Card</span>
+          <strong>Your lender-ready position</strong>
+          <span className="negotiation-nav-action">Open card <span aria-hidden="true">→</span></span>
+        </a>
 
         <button className="nav-item">
           <Settings size={19} />

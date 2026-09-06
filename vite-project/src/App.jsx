@@ -4,6 +4,7 @@ import Sidebar from "./components/SideBar";
 import Topbar from "./components/TopBar";
 import AssessmentPanel from "./components/AssesmentPanel";
 import InsightPanel from "./components/InsightPanel";
+import NegotiationCard from "./components/NegotiationCard";
 import { calculateAssessment } from "./engine/assesment";
 import { parseAmount } from "./utils/numbers";
 
@@ -29,6 +30,7 @@ function App() {
     collateralValue: "",
     lenderOffer: "",
     offeredRate: "",
+    processingFee: "",
   });
 
   const updateBorrower = (field, value) => {
@@ -43,6 +45,7 @@ function App() {
   const parsedEssentialExpenses = parseAmount(borrower.essentialExpenses);
   const parsedRequestedAmount = parseAmount(borrower.requestedAmount);
   const parsedLowMonthIncome = parseAmount(borrower.lowMonthIncome);
+  const parsedProcessingFee = parseAmount(borrower.processingFee);
 
   const hasAffordabilityData =
     parsedIncome !== null &&
@@ -60,6 +63,10 @@ function App() {
         loanType: borrower.loanType,
         creditScore: borrower.creditScore,
         repaymentHistory: borrower.repaymentHistory,
+        collateralValue: parseAmount(borrower.collateralValue),
+        lenderOffer: borrower.lenderOffer,
+        offeredRate: borrower.offeredRate,
+        processingFee: parsedProcessingFee,
       })
     : null;
 
@@ -79,6 +86,8 @@ function App() {
 
           <InsightPanel assessment={assessment} borrower={borrower} />
         </section>
+
+        <NegotiationCard assessment={assessment} borrower={borrower} />
       </main>
     </div>
   );

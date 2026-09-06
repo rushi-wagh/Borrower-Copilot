@@ -283,6 +283,19 @@ export const QUESTION_DEFINITIONS = {
     actionLabel: "Complete assessment",
     impact: "rate_negotiation_position",
   },
+  processingFee: {
+    id: "processingFee",
+    eyebrow: "PROCESSING FEE",
+    title: "What processing fee did the lender quote?",
+    description: "Enter the one-time processing fee charged for this lender offer.",
+    type: "amount",
+    suffix: "one-time",
+    placeholder: "Enter processing fee",
+    helper: "Enter ₹0 if the lender confirmed there is no processing fee.",
+    knownLabel: "Processing Fee",
+    actionLabel: "Save processing fee",
+    impact: "all_in_cost_comparison",
+  },
 };
 
 function isEmpty(val) {
@@ -294,7 +307,8 @@ function isEmpty(val) {
  * Returns the ID of the single highest-value unanswered question for the borrower's current state,
  * or null if no remaining question has decision-critical impact.
  *
- * assessment is passed so FOIR can be computed using proposed EMI (safe EMI) not just existing EMI.
+ * assessment is passed so FOIR can be computed using the requested loan's EMI,
+ * not just existing EMI or the safe EMI ceiling.
  */
 export function getNextAdaptiveQuestion(borrower, assessment) {
   // Phase 1: Core Base Questions (Must collect minimum 9 core parameters)
@@ -332,7 +346,7 @@ export function getNextAdaptiveQuestion(borrower, assessment) {
 
   // Priority 3: Repayment history risk check (Missed/bounced payment)
   if (
-    ((parsedEmi !== null && parsedEmi > 0) ||
+    ((borrower.incomeType === "variable" && parsedEmi !== null && parsedEmi > 0) ||
       borrower.creditScore === "650_699" ||
       borrower.creditScore === "below_650" ||
       borrower.highCostDebt === "yes") &&
@@ -366,14 +380,20 @@ export function getNextAdaptiveQuestion(borrower, assessment) {
   }
 
   // Priority 6: Emergency savings buffer
-  // Uses FOIR = (existingEmi + safeEmi) / income per RULES.md Rule 4.
-  // safeEmi comes from the live assessment object when available.
-  // Falls back to existingEmi-only FOIR when assessment is not yet computed.
+  // Uses FOIR = (existingEmi + proposedEmi) / income per RULES.md Rule 4.
+  // The assessment calculates proposedEmi from the requested amount and its
+  // current rate/tenure assumptions.
   if (parsedIncome !== null && parsedIncome > 0 && parsedExpenses !== null && parsedEmi !== null) {
-    const safeEmi = assessment?.safeEmi ?? 0;
-    const foir = (parsedEmi + safeEmi) / parsedIncome;
+    const proposedEmi = assessment?.proposedEmi;
+    const foir =
+      proposedEmi !== null && proposedEmi !== undefined
+        ? (parsedEmi + proposedEmi) / parsedIncome
+        : null;
     const surplus = parsedIncome - parsedExpenses - parsedEmi;
-    if ((foir > 0.35 || surplus < 0.25 * parsedIncome) && isEmpty(borrower.emergencySavings)) {
+    if (
+      ((foir !== null && foir > 0.35) || surplus < 0.25 * parsedIncome) &&
+      isEmpty(borrower.emergencySavings)
+    ) {
       return "emergencySavings";
     }
   }
@@ -400,6 +420,9 @@ export function getNextAdaptiveQuestion(borrower, assessment) {
   }
   if (borrower.lenderOffer === "yes" && isEmpty(borrower.offeredRate)) {
     return "offeredRate";
+  }
+  if (borrower.lenderOffer === "yes" && !isEmpty(borrower.offeredRate) && isEmpty(borrower.processingFee)) {
+    return "processingFee";
   }
 
   // No remaining unanswered question can materially change the assessment -> STOP

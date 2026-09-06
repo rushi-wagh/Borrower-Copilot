@@ -120,6 +120,18 @@ The product should clearly separate what a lender may offer from what the borrow
 
 Source: Challenge brief; My judgement
 
+Prototype lender-side capacity methodology
+
+| What | Value | Why | Source |
+| --- | --- | --- | --- |
+| Lender-style EMI ceiling | 50% FOIR capacity before the surplus guardrail | Represents the documented lender-style debt-burden ceiling; it is not borrower-safe affordability | Existing Rule 4; my judgement |
+| Lender-side range uncertainty | High confidence: 90%–110%; Medium: 80%–120%; Low: 70%–130% of the FOIR-based amount | Shows uncertainty instead of false precision when lender underwriting information is incomplete | My judgement |
+| Property/gold collateral cap | 60% of declared collateral value | Simple prototype LTV ceiling for secured property/gold products | My judgement |
+| Business collateral cap | 50% of declared collateral value | Simple prototype LTV ceiling when business borrowing has declared collateral; it affects lender-side consideration only | My judgement |
+| Borrower-safe boundary | Never increased by lender-side capacity or collateral | Repayment-safe amount remains based on the lower of FOIR and surplus capacity | Existing Rule 6; my judgement |
+
+The resulting figure is an indicative lender-side range, not an approval prediction. Actual sanction depends on lender-specific underwriting and product rules. The borrower should use the borrower-safe amount as their personal ceiling.
+
 10. Variable Income
 
 For borrowers with variable income, use a conservative representative income instead of simply using the highest reported month.
@@ -221,6 +233,17 @@ A lower headline interest rate does not necessarily mean a lower overall borrowi
 
 Source: RBI KFS/APR framework
 
+Prototype APR methodology
+
+| What | Value | Why | Source |
+| --- | --- | --- | --- |
+| APR inputs | Requested principal, lender-offered annual rate, tenure, and supplied processing fee | Uses actual borrower-provided offer data without fabricating missing charges | Existing EMI engine; my judgement |
+| APR calculation | Annualized monthly rate that equates net proceeds (principal minus processing fee) with the quoted EMI cash flows | Represents the fee-inclusive borrowing cost over the selected tenure | Standard loan mathematics; my judgement |
+| Missing fees | All-in APR is not available until the processing fee is supplied; other charges are excluded unless separately supported | Prevents the headline interest rate from being presented as the full borrowing cost | RBI KFS/APR framework; my judgement |
+| Fair-rate comparison | Quoted annual rate is compared with the existing indicative fair-rate band | Flags a quote above the current profile-based range without changing the borrowing recommendation | Existing Rule 14; my judgement |
+
+The APR shown is indicative and includes only the supplied processing fee. Actual APR may be higher if insurance, taxes, documentation, foreclosure or other mandatory charges apply.
+
 16. Tenure
 
 Show both:
@@ -231,6 +254,14 @@ and total repayment / interest cost.
 A longer tenure generally reduces the monthly EMI but increases the total interest paid.
 
 Source: RBI loan/EMI guidance
+
+Prototype tenure comparison
+
+| What | Value | Why | Source |
+| --- | --- | --- | --- |
+| Shorter comparison tenure | 24 months less than the current 60-month assumption, or 12 months minimum | Shows the monthly-outflow versus total-interest trade-off without changing affordability rules | Existing Rule 16; my judgement |
+| Longer comparison tenure | 24 months more than the current 60-month assumption | Shows the lower-EMI versus higher-total-interest trade-off | Existing Rule 16; my judgement |
+| Safe EMI boundary | The existing safe EMI ceiling is unchanged | Tenure changes payment and interest only; it does not increase borrower-safe capacity | Existing Rule 6; my judgement |
 
 17. Stress Case
 
