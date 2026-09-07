@@ -94,6 +94,10 @@ export default function NegotiationCard({ assessment, borrower }) {
 
       <p className="capacity-guidance">Use the borrower-safe amount as your personal ceiling.</p>
 
+      {assessment.securedAlternativeSuggestion && (
+        <p className="capacity-guidance">{assessment.securedAlternativeSuggestion}</p>
+      )}
+
       {assessment.tenureTradeoff && (
         <div className="tenure-tradeoff">
           <div className="tenure-heading">

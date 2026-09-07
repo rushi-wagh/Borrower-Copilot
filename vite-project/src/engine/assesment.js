@@ -377,6 +377,25 @@ function buildFairRateReason({ loanType, creditScore }) {
   return `The current rate logic uses the ${loanLabel} category and ${creditLabel}; it is an indicative range, not a lender quote.`;
 }
 
+function buildSecuredRouteReason({ incomeType, collateralValue, purpose, loanType }) {
+  const businessBorrowing = purpose === "business" || loanType === "business_loan";
+  const unsecuredBusinessStyle =
+    loanType === "business_loan" ||
+    (loanType === "unsecured_personal" && purpose === "business");
+
+  if (
+    incomeType !== "self_employed" ||
+    collateralValue === null ||
+    collateralValue <= 0 ||
+    !businessBorrowing ||
+    !unsecuredBusinessStyle
+  ) {
+    return null;
+  }
+
+  return "Secured route worth exploring: You have meaningful unencumbered collateral. Ask the lender whether a secured business/LAP structure is available. Collateral can affect lender-side structure or pricing, but your borrower-safe ceiling remains based on repayment capacity.";
+}
+
 function buildConfidenceReason({ creditScore, incomeType, repaymentHistory }) {
   if (repaymentHistory === "serious_default" || creditScore === "below_650") {
     return repaymentHistory === "serious_default"
@@ -489,6 +508,7 @@ export function calculateAssessment({
   requestedAmount = null,
   incomeType = "salaried",
   lowMonthIncome = null,
+  purpose = null,
   loanType = "unsecured_personal",
   creditScore = null,
   repaymentHistory = null,
@@ -596,6 +616,12 @@ export function calculateAssessment({
     lenderSideCapacity,
     offerCost,
     tenureTradeoff,
+    securedAlternativeSuggestion: buildSecuredRouteReason({
+      incomeType,
+      collateralValue,
+      purpose,
+      loanType,
+    }),
     fairRateRange,
     confidence,
     assumptions: {

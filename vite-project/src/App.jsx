@@ -61,6 +61,7 @@ function App() {
         requestedAmount: parsedRequestedAmount,
         incomeType: borrower.incomeType,
         lowMonthIncome: parsedLowMonthIncome,
+        purpose: borrower.purpose,
         loanType: borrower.loanType,
         creditScore: borrower.creditScore,
         repaymentHistory: borrower.repaymentHistory,

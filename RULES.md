@@ -105,6 +105,14 @@ The safe borrowing amount is the maximum loan amount that fits within the borrow
 
 This converts the monthly affordability limit into a practical loan amount.
 
+Effective annual rate for borrower-safe loan-amount conversion = the existing 12% baseline, clamped to the borrower's fair-rate band.
+
+- If 12% falls inside the fair-rate band, use 12%.
+- If 12% is below the fair-rate band, use the band's lower bound.
+- If 12% is above the fair-rate band, use the band's upper bound.
+
+This is a prototype judgement used to keep safe-amount conversion consistent with the profile's displayed rate band. For example, Ravi's 15.0%–18.5% band causes the effective rate to be 15%.
+
 Source: My judgement
 
 9. Lender Amount vs Safe Amount
@@ -333,6 +341,10 @@ Source: Challenge brief; My judgement
 Collateral should be considered when deciding whether a secured loan may be appropriate.
 
 Collateral can change the borrowing structure, but it does not replace the affordability check.
+
+For a self-employed borrower with meaningful collateral, business borrowing involved (`purpose === business` or `loanType === business_loan`), and an unsecured/business-style current product, the Negotiation Card recommends asking a lender about a secured business/LAP-style structure. This is a borrower-side prompt to explore an alternative, not an automatic loan-type conversion or an approval prediction. Collateral may affect lender-side structure, pricing or capacity, but it must not increase the borrower-safe EMI or borrower-safe amount.
+
+Source: My judgement
 
 LTV
 

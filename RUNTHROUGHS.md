@@ -167,7 +167,7 @@ The EMI ceiling is the amount Ravi should treat as his personal new-debt limit.
 | EMI ceiling | **₹7,500/month** |
 | Emergency buffer | 3+ months |
 | Collateral | ₹45,00,000 shop premises |
-| Negotiation point | Keep the ₹45L collateral separate from borrower-safe affordability and negotiate around the ₹3.15L personal ceiling. |
+| Negotiation point | Secured route worth exploring: ask whether a secured business/LAP structure is available; keep the ₹45L collateral separate from borrower-safe affordability and negotiate around the ₹3.15L personal ceiling. |
 
 **What this demonstrates:** Ravi shows why lender-side structure and borrower affordability must remain separate. Property collateral does not automatically make a ₹15L loan affordable.
 
