@@ -133,11 +133,13 @@ The requested ₹15,00,000 is materially above the borrower-safe amount. Busines
 
 ### O2 — How much?
 
-- **Borrower-safe amount:** ₹3,37,163
+- **Borrower-safe amount:** ₹3,15,259
 - **Indicative lender-side capacity:** ₹7,20,000–₹10,80,000
-- **Personal ceiling:** ₹3,37,163
+- **Personal ceiling:** ₹3,15,259
 
-The lender-side amount is not an approval prediction.
+- **Effective annual rate used for safe-amount conversion:** 15.0% — the existing 12% assumption is clamped to Ravi's 15.0%–18.5% fair-rate band.
+
+The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The lender-side amount is not an approval prediction.
 
 ### O3 — Fair rate
 
@@ -159,13 +161,13 @@ The EMI ceiling is the amount Ravi should treat as his personal new-debt limit.
 | Card value | Ravi's position |
 |---|---|
 | Recommendation | **BORROW LESS** |
-| Borrower-safe amount | **₹3,37,163** |
+| Borrower-safe amount | **₹3,15,259** |
 | Lender-side capacity | ₹7,20,000–₹10,80,000 |
 | Fair-rate band | **15.0%–18.5%** |
 | EMI ceiling | **₹7,500/month** |
 | Emergency buffer | 3+ months |
 | Collateral | ₹45,00,000 shop premises |
-| Negotiation point | Keep the ₹45L collateral separate from borrower-safe affordability and negotiate around the ₹3.37L personal ceiling. |
+| Negotiation point | Keep the ₹45L collateral separate from borrower-safe affordability and negotiate around the ₹3.15L personal ceiling. |
 
 **What this demonstrates:** Ravi shows why lender-side structure and borrower affordability must remain separate. Property collateral does not automatically make a ₹15L loan affordable.
 
@@ -268,7 +270,7 @@ A fair rate does not make an unaffordable or high-risk loan safe.
 |---|---|---:|---:|---|---|
 | **Priya** | **BORROW** | ₹15,28,471 | ₹34,000 | 11.0%–13.0% | High |
 | **Ravi** | **BORROW LESS** | ₹3,37,163 | ₹7,500 | 15.0%–18.5% | Medium |
-| **Anita** | **DON'T BORROW** | ₹67,433 | ₹1,500 | 11.5%–13.5% | High |
+| **Anita** | **DON'T BORROW** | ₹67,433 | ₹1,500 | 11.5%–13.5% | Low |
 
 ### What the three scenarios demonstrate
 

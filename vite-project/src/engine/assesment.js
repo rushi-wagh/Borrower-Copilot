@@ -170,6 +170,18 @@ function parseFairRateBand(fairRateRange) {
   };
 }
 
+function selectEffectiveRate({ annualRate, fairRateRange }) {
+  const fairRateBand = parseFairRateBand(fairRateRange);
+  if (!fairRateBand) {
+    return annualRate;
+  }
+
+  return Math.min(
+    fairRateBand.upper,
+    Math.max(fairRateBand.lower, annualRate)
+  );
+}
+
 function buildOfferCost({
   lenderOffer,
   offeredRate,
@@ -501,9 +513,14 @@ export function calculateAssessment({
     existingEmi,
   });
 
+  const fairRateRange = calculateFairRateRange({ loanType, creditScore });
+  const effectiveAnnualRate = selectEffectiveRate({
+    annualRate,
+    fairRateRange,
+  });
   const safeAmount = calculateLoanAmountFromEmi({
     emi: affordability.safeEmi,
-    annualRate,
+    annualRate: effectiveAnnualRate,
     tenureMonths,
   });
 
@@ -516,7 +533,6 @@ export function calculateAssessment({
         })
       : null;
 
-  const fairRateRange = calculateFairRateRange({ loanType, creditScore });
   const confidence = calculateConfidence({ creditScore, incomeType, repaymentHistory });
   const recommendation = calculateRecommendation({ safeAmount, requestedAmount, repaymentHistory });
   const stressCase = calculateStressCase({
@@ -568,7 +584,11 @@ export function calculateAssessment({
         repaymentHistory,
       }),
       safeEmi: buildSafeEmiReason(affordability),
-      safeAmount: buildSafeAmountReason({ safeEmi: affordability.safeEmi, annualRate, tenureMonths }),
+      safeAmount: buildSafeAmountReason({
+        safeEmi: affordability.safeEmi,
+        annualRate: effectiveAnnualRate,
+        tenureMonths,
+      }),
       fairRate: buildFairRateReason({ loanType, creditScore }),
       confidence: buildConfidenceReason({ creditScore, incomeType, repaymentHistory }),
     },
@@ -580,6 +600,7 @@ export function calculateAssessment({
     confidence,
     assumptions: {
       annualRate,
+      effectiveAnnualRate,
       tenureMonths,
     },
   };
