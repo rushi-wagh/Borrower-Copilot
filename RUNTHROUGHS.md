@@ -139,7 +139,7 @@ The requested ₹15,00,000 is materially above the borrower-safe amount. Busines
 
 - **Effective annual rate used for safe-amount conversion:** 15.0% — the existing 12% assumption is clamped to Ravi's 15.0%–18.5% fair-rate band.
 
-The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The lender-side amount is not an approval prediction.
+The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The lender-side amount is not an approval prediction.
 
 ### O3 — Fair rate
 
