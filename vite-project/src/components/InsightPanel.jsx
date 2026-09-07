@@ -29,7 +29,9 @@ export default function InsightPanel({ assessment }) {
         <div className="progress-top">
           <span>Assessment status</span>
           <strong>
-            {hasAffordabilityData ? `Calculated (${assessment.confidence} Confidence)` : "Building"}
+            {hasAffordabilityData
+              ? `Calculated (${assessment.confidence} Confidence)`
+              : "Assessment in progress"}
           </strong>
         </div>
 

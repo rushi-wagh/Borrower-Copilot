@@ -6,6 +6,7 @@ import AssessmentPanel from "./components/AssesmentPanel";
 import InsightPanel from "./components/InsightPanel";
 import NegotiationCard from "./components/NegotiationCard";
 import { calculateAssessment } from "./engine/assesment";
+import { getNextAdaptiveQuestion } from "./engine/questions";
 import { parseAmount } from "./utils/numbers";
 
 import "./App.css";
@@ -70,6 +71,10 @@ function App() {
       })
     : null;
 
+  const assessmentComplete =
+    assessment !== null && getNextAdaptiveQuestion(borrower, assessment) === null;
+  const visibleAssessment = assessmentComplete ? assessment : null;
+
   return (
     <div className="app-shell">
       <Sidebar />
@@ -84,10 +89,10 @@ function App() {
             assessment={assessment}
           />
 
-          <InsightPanel assessment={assessment} borrower={borrower} />
+          <InsightPanel assessment={visibleAssessment} borrower={borrower} />
         </section>
 
-        <NegotiationCard assessment={assessment} borrower={borrower} />
+        <NegotiationCard assessment={visibleAssessment} borrower={borrower} />
       </main>
     </div>
   );

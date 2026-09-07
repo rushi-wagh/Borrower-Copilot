@@ -122,9 +122,6 @@ export default function AssessmentPanel({ borrower, updateBorrower, assessment }
           />
         </div>
 
-        <Action onClick={() => jumpToQuestion("purpose")}>
-          Review & edit answers
-        </Action>
       </Panel>
     );
   }
@@ -278,7 +275,7 @@ function isFilled(val) {
 
 function AmountInput({ value, placeholder, suffix = "per month", onChange }) {
   return (
-    <div className="input-wrapper">
+    <label className="input-wrapper">
       <span className="currency">₹</span>
       <input
         type="text"
@@ -290,20 +287,20 @@ function AmountInput({ value, placeholder, suffix = "per month", onChange }) {
       {suffix && suffix.trim() !== "" && (
         <span className="input-suffix">{suffix}</span>
       )}
-    </div>
+    </label>
   );
 }
 
 function TextInput({ value, placeholder, onChange }) {
   return (
-    <div className="input-wrapper">
+    <label className="input-wrapper">
       <input
         type="text"
         placeholder={placeholder}
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
       />
-    </div>
+    </label>
   );
 }
 

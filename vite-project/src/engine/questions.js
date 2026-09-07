@@ -311,14 +311,7 @@ function isEmpty(val) {
  * not just existing EMI or the safe EMI ceiling.
  */
 export function getNextAdaptiveQuestion(borrower, assessment) {
-  // Phase 1: Core Base Questions (Must collect minimum 9 core parameters)
-  for (const qId of CORE_QUESTIONS) {
-    if (isEmpty(borrower[qId])) {
-      return qId;
-    }
-  }
-
-  // Phase 2: Priority-Based Adaptive Questions (Evaluated post-Core)
+  // Evaluate triggered adaptive questions before falling back to the core sequence.
   const parsedIncome = parseAmount(borrower.income);
   const parsedEmi = parseAmount(borrower.existingEmi);
   const parsedExpenses = parseAmount(borrower.essentialExpenses);
@@ -423,6 +416,13 @@ export function getNextAdaptiveQuestion(borrower, assessment) {
   }
   if (borrower.lenderOffer === "yes" && !isEmpty(borrower.offeredRate) && isEmpty(borrower.processingFee)) {
     return "processingFee";
+  }
+
+  // Core questions remain mandatory, but do not block triggered adaptive questions.
+  for (const qId of CORE_QUESTIONS) {
+    if (isEmpty(borrower[qId])) {
+      return qId;
+    }
   }
 
   // No remaining unanswered question can materially change the assessment -> STOP

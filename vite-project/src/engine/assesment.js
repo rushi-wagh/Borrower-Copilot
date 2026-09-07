@@ -49,9 +49,16 @@ function calculateStressCase({
     tenureMonths,
   });
 
-  let interpretation = `With income 15% lower, safe EMI falls to ${formatINR(
-    affordability.safeEmi
-  )} and safe borrowing amount falls to ${formatINR(stressedSafeAmount)}.`;
+  let interpretation =
+    affordability.safeEmi === 0
+      ? `After a 15% income drop, income becomes ${formatINR(
+          stressedIncome
+        )}. After ${formatINR(essentialExpenses)} essential expenses and ${formatINR(
+          existingEmi
+        )} existing EMI, there is no remaining safe capacity for a new EMI.`
+      : `With income 15% lower, safe EMI falls to ${formatINR(
+          affordability.safeEmi
+        )} and safe borrowing amount falls to ${formatINR(stressedSafeAmount)}.`;
 
   if (requestedAmount !== null) {
     interpretation +=

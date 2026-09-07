@@ -1,16 +1,110 @@
-# React + Vite
+# Borrower Copilot
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## What it is
 
-Currently, two official plugins are available:
+Borrower Copilot is a borrower-side decision-support tool for Indian borrowers. It helps a borrower understand:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Should I borrow at all?
+- How much can I safely carry?
+- What interest rate is reasonable?
+- What EMI should I agree to?
 
-## React Compiler
+The product then produces a one-page Negotiation Card for lender conversations.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Borrower Copilot is **not** a lender approval system, credit model, or bureau-based decision engine. It does not predict approval or replace lender underwriting.
 
-## Expanding the Oxlint configuration
+## Problem
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Lenders may communicate eligibility, approval, or a possible sanction amount, but that does not tell a borrower what they can safely afford or whether the proposed terms are reasonable. Borrower Copilot gives the borrower a transparent affordability and negotiation view before they commit to a loan.
+
+## Key Features
+
+- Adaptive borrower assessment
+- Affordability and FOIR-style analysis
+- Safe EMI and safe borrowing amount
+- Borrow / Borrow Less / Don't Borrow recommendation
+- Indicative fair interest-rate band
+- All-in cost and APR-aware comparison when offer data is available
+- 15% income-drop stress scenario
+- Confidence based on available information
+- One-page Negotiation Card
+- Three borrower scenarios: salaried, self-employed/business, and variable/informal income
+
+## How the assessment works
+
+1. Collect essential borrower information such as purpose, requested amount, loan type, income, existing EMIs, expenses, and credit profile.
+2. Ask additional questions only when their answers can materially improve the decision, range, risk assessment, or confidence.
+3. Calculate affordability using the documented borrower-side rules.
+4. Separate borrower-safe affordability from an indicative lender-side capacity or likely sanction range.
+5. Show the recommendation, fair-rate range, EMI ceiling, confidence, and stress case after the assessment is complete.
+6. Generate the Negotiation Card with the borrower-facing position and negotiation points.
+
+## Important design principles
+
+- Borrower-first, not lender-first
+- Explain every important number
+- Unknown information widens uncertainty; it does not automatically become zero or bad
+- Conservative assumptions are explicitly disclosed
+- Serious repayment risk can override a purely mathematical affordability result
+- Rules and calculations are separated from the UI
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- CSS
+- Lucide React
+
+## Project Structure
+
+```text
+src/
+  components/   Assessment, insight, navigation, and Negotiation Card UI
+  engine/       Adaptive questions, affordability, assessment, and EMI calculations
+  utils/        Currency formatting and numeric parsing helpers
+  App.jsx       Application state and assessment composition
+  App.css       Application layout and component styling
+```
+
+Key files include:
+
+- `src/components/AssesmentPanel.jsx` - normal core and adaptive interview flow
+- `src/components/InsightPanel.jsx` - live assessment status and result metrics
+- `src/components/NegotiationCard.jsx` - final borrower-facing negotiation summary
+- `src/engine/questions.js` - priority-based adaptive question selection
+- `src/engine/affordability.js` - surplus, FOIR, and safe EMI calculations
+- `src/engine/assesment.js` - recommendation, rate, confidence, lender-side capacity, stress, APR, and tenure outputs
+- `src/engine/emi.js` - EMI, loan amount, and loan-cost calculations
+
+## Running locally
+
+From the `vite-project` directory:
+
+```bash
+npm install
+npm run dev
+```
+
+Other available checks:
+
+```bash
+npm run build
+npm run lint
+```
+
+## Rules & Assumptions
+
+Financial thresholds, product assumptions, rate bands, affordability rules, APR methodology, stress assumptions, and tenure assumptions are documented in the root-level `RULES.md` file. Those documented prototype assumptions explain how the displayed values should be interpreted.
+
+## Run-throughs
+
+The root-level `RUNTHROUGHS.md` contains the three documented borrower scenarios, their question flows, assumptions, and assessment outputs:
+
+- Priya: salaried borrower
+- Ravi: self-employed/business borrower
+- Anita: variable/informal-income borrower
+
+## Disclaimer
+
+Borrower Copilot is a prototype decision-support tool, not financial advice, lender approval, credit underwriting, or a guarantee of eligibility, sanction amount, or interest rates. Actual borrowing decisions should consider complete financial information and lender-specific terms.
