@@ -139,7 +139,7 @@ The requested ₹15,00,000 is materially above the borrower-safe amount. Busines
 
 - **Effective annual rate used for safe-amount conversion:** 15.0% — the existing 12% assumption is clamped to Ravi's 15.0%–18.5% fair-rate band.
 
-The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The lender-side amount is not an approval prediction.
+The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The safe amount uses the existing 15% effective annual rate selected within Ravi's 15.0%–18.5% fair-rate band. The lender-side amount is not an approval prediction.
 
 ### O3 — Fair rate
 
@@ -167,7 +167,7 @@ The EMI ceiling is the amount Ravi should treat as his personal new-debt limit.
 | EMI ceiling | **₹7,500/month** |
 | Emergency buffer | 3+ months |
 | Collateral | ₹45,00,000 shop premises |
-| Negotiation point | Secured route worth exploring: ask whether a secured business/LAP structure is available; keep the ₹45L collateral separate from borrower-safe affordability and negotiate around the ₹3.15L personal ceiling. |
+| Negotiation point | Keep the ₹45L collateral separate from borrower-safe affordability; the card also flags a secured business/LAP-style route worth discussing with the lender. Negotiate around the ₹3.15L personal ceiling. |
 
 **What this demonstrates:** Ravi shows why lender-side structure and borrower affordability must remain separate. Property collateral does not automatically make a ₹15L loan affordable.
 
